@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+// Create a list of the pokemon from the API
+import React, { useEffect, useState } from 'react'
 
 function App() {
+
+  const [pokemon, setPokemon] = useState([])
+
+  useEffect(() => {
+    fetch('https://pokeapi.co/api/v2/pokemon?limit=807')
+    .then(response => response.json())
+    .then(response => setPokemon(response.results))
+    .catch((err) => {
+      console.log(err)
+    })
+  }, [])
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  <div>
+    {pokemon.map((poke, index) =>  (<li key={index}> {poke.name}</li>)
+    )}
+  </div>
   );
 }
 
